@@ -40,8 +40,9 @@ frm.rowconfigure(0, weight=1)
 
 
 # TODO: Populate frames with widgets and define event handler functions
-image_pth = os.path.join(script_dir, "poke_ball.png")
-photo = PhotoImage(file=image_pth)
+global image_path
+image_path = os.path.join(script_dir, "poke_ball.png")
+photo = PhotoImage(file=image_path)
 img_label = ttk.Label(frm, image=photo)
 img_label.grid(row=0, column=0, padx=10, pady=10)
 
@@ -67,8 +68,11 @@ def select_pokemon(event):
 
 pok_cmbox.bind("<<ComboboxSelected>>", select_pokemon)
 
+def desktop_bg():
+    image_lib.set_desktop_background_image(image_path=image_path)
 
-desk_but = ttk.Button(frm, text="Set as Desktop Image", command=)
+
+desk_but = ttk.Button(frm, text="Set as Desktop Image", command=desktop_bg)
 desk_but.grid(row=3, column=0)
 
 root.mainloop()
