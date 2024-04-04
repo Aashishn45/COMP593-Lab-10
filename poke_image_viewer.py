@@ -8,6 +8,7 @@ Usage:
 """
 import ctypes
 from tkinter import ttk, Tk, PhotoImage
+import tkinter as tk
 import os
 import poke_api
 import image_lib
@@ -24,7 +25,7 @@ if not os.path.isdir(images_dir):
 # Create the main window
 root = Tk()
 root.title("Pokemon Viewer")
-root.minsize(500, 600)
+root.minsize(600,600)
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
@@ -40,7 +41,7 @@ frm.rowconfigure(0, weight=1)
 
 
 # TODO: Populate frames with widgets and define event handler functions
-global image_path
+
 image_path = os.path.join(script_dir, "poke_ball.png")
 photo = PhotoImage(file=image_path)
 img_label = ttk.Label(frm, image=photo)
@@ -56,6 +57,7 @@ pok_cmbox.grid(row=1, column=0, pady=10)
 
 def select_pokemon(event):
     poke = pok_cmbox.get()
+    global image_path
     image_path = poke_api.get_pok_art(poke, images_dir)
     if image_path:
         photo["file"] = image_path
@@ -64,15 +66,26 @@ def select_pokemon(event):
     else:
         img_label["text"] = "No artwork available"
         img_label["image"] = None
+    
+    #button state changing   
+    if desk_but.instate(['disabled']):
+        desk_but.state(['!disabled'])
+    return
 
 
 pok_cmbox.bind("<<ComboboxSelected>>", select_pokemon)
 
+
+#setting desktop background
 def desktop_bg():
-    image_lib.set_desktop_background_image(image_path=image_path)
+    image_lib.set_desktop_background_image(image_path)
+    return
 
 
-desk_but = ttk.Button(frm, text="Set as Desktop Image", command=desktop_bg)
+
+desk_but = ttk.Button(frm, text="Set as Desktop Image", state=tk.DISABLED, command=desktop_bg)
+
 desk_but.grid(row=3, column=0)
+
 
 root.mainloop()
