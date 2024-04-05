@@ -85,7 +85,7 @@ def desktop_bg():
 
 desk_but = ttk.Button(frm, text="Set as Desktop Image", state=tk.DISABLED, command=desktop_bg)
 
-desk_but.grid(row=3, column=0)
+desk_but.grid(row=2, column=0, padx=10, pady=10)
 
 
 root.mainloop()
